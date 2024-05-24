@@ -34,6 +34,7 @@
                     </div>
                     <group>
                         <group>
+                            <field name="property_type_id" />
                             <field name="postcode" />
                             <field name="date_availability"/>
                         </group>
@@ -53,6 +54,13 @@
                                 <field name="garden"/>
                                 <field name="garden_area"/>
                                 <field name="garden_orientation"/>
+                            </group>
+                        </page>
+                    </notebook>
+                    <notebook>
+                        <page string="Other Info">
+                            <group>
+
                             </group>
                         </page>
                     </notebook>
@@ -78,7 +86,7 @@
     </record>
 
     <record id="estate_property_action" model="ir.actions.act_window">
-        <field name="name">Estate Property</field>
+        <field name="name">Properties</field>
         <field name="res_model">estate.property</field>
         <field name="view_mode">tree,form</field>
         <field name="help" type="html">

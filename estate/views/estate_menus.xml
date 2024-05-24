@@ -6,9 +6,13 @@
 
         <!-- Submenu for Advertisements -->
         <menuitem id="estate_advertisements_menu" name="Advertisements" parent="estate_menu_root" sequence="1"/>
+        <menuitem id="estate_settings_menu" name="Settings" parent="estate_menu_root" sequence="2"/>
 
-        <!-- Action Menu for Properties -->
+        <!-- Action Menu for Advertisements -->
         <menuitem id="estate_property_menu_action" name="Properties" parent="estate_advertisements_menu" action="estate_property_action" sequence="1"/>
+
+        <!-- Action Menu for Settings -->
+        <menuitem id="estate_property_type_menu_action" name="Property Types" parent="estate_settings_menu" action="estate_property_type_action" sequence="1"/>
 
     </data>
 </odoo>
