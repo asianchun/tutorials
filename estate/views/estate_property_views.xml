@@ -28,9 +28,12 @@
             <form string="Property">
                 <sheet>
                     <div class="oe_title">
-                        <h1 class="mb32">
+                        <h1 class="mb10">
                             <field name="name" />
                         </h1>
+                        <div class="mb32">
+                            <field name="property_tag_ids" widget="many2many_tags"/>
+                        </div>
                     </div>
                     <group>
                         <group>
