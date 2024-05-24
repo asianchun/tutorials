@@ -59,6 +59,22 @@
                                 <field name="garden_orientation"/>
                             </group>
                         </page>
+                        <page string="Offers">
+                            <field name="property_offer_ids">
+                                <tree string="Offers">
+                                    <field name="price"/>
+                                    <field name="partner_id" />
+                                    <field name="status"/>
+                                </tree>
+                                <form string="Offer">
+                                    <group>
+                                        <field name="price"/>
+                                        <field name="partner_id" />
+                                        <field name="status"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
                         <page string="Other Info">
                             <group>
                                 <field name="salesman_id"/>
@@ -75,7 +91,7 @@
         <field name="name">estate.property.tree</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
-            <tree string="Channel">
+            <tree string="Properties">
                 <field name="name" string="Title"/> 
                 <field name="postcode"/>
                 <field name="bedrooms" string="Bedrooms"/>
