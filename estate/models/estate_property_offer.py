@@ -1,4 +1,5 @@
 from odoo import fields, models, api
+from odoo.exceptions import UserError
 from datetime import timedelta
 
 class PropertyOffer(models.Model):
@@ -12,6 +13,29 @@ class PropertyOffer(models.Model):
     
     partner_id = fields.Many2one("res.partner", string="Partner", required=True)
     property_id = fields.Many2one("estate.property", string="Property", required=True)
+    
+    def action_set_accepted(self):
+        for record in self:
+            accepted_offers = self.search([
+                    ('property_id', '=', record.property_id.id),
+                    ('status', '=', 'accepted'),
+                    ('id', '!=', record.id)
+                ])
+            
+            if accepted_offers:
+                raise UserError('There is already an accepted offer!')
+            
+            record.status = 'accepted'
+            record.property_id.selling_price = record.price
+            record.property_id.buyer_id = record.partner_id
+                    
+        return True
+    
+    def action_set_rejected(self):
+        for record in self:
+            record.status = 'refused'
+        
+        return True
     
     @api.depends("validity", 'create_date')
     def _compute_deadline(self):
