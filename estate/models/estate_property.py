@@ -1,5 +1,5 @@
 from odoo import fields, models, api
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from datetime import timedelta
 
 
@@ -77,4 +77,10 @@ class Property(models.Model):
         else:
             self.garden_area = 0
             self.garden_orientation = ''
+            
+    @api.constrains('selling_price')
+    def _check_selling_price(self):
+        for record in self:
+            if record.selling_price <= record.expected_price * 0.9:
+                raise ValidationError("The selling price cannot be less than 90% of the expected price! You must reduce the expected price if you want to accept the offer")
     
