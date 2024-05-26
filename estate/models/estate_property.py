@@ -7,6 +7,7 @@ class Property(models.Model):
     _name = "estate.property"
     _description = "Property"
     
+    # Creating fields
     name = fields.Char(string='Property Name', required=True)
     description = fields.Text('Description')
     postcode = fields.Char('Postcode')
@@ -24,20 +25,24 @@ class Property(models.Model):
     state = fields.Selection(selection=[('new', 'New'), ('offer received', 'Offer Received'), ('offer accepted', 'Offer Accepted'), ('sold', 'Sold'), ('cancelled', 'Cancelled')],
                              copy=False, default='new', required=True)
     
+    # Foreign Key fields
     property_type_id = fields.Many2one("estate.property.type", string="Property Type")
     salesman_id = fields.Many2one("res.users", string="Salesman", default=lambda self: self.env.user)
     buyer_id = fields.Many2one("res.partner", string="Buyer", copy=False) 
     property_tag_ids = fields.Many2many("estate.property.tag", string="Property Tag")
     property_offer_ids = fields.One2many("estate.property.offer", "property_id", string="Offers")
     
+    # Calculated fields
     total_area = fields.Integer(compute="_compute_area")
     best_price = fields.Float(compute="_compute_best_price")
     
+    # Add simple constraints
     _sql_constraints = [
         ('check_expected_price', 'CHECK(expected_price > 0)', 'The expected price must be a positive number.'),
         ('check_selling_price', 'CHECK(selling_price > 0)', 'The selling price must be a positive number.'),
     ]
     
+    # Defining menu button actions
     def action_set_sold(self):
         for record in self:
             if record.state == 'cancelled':
@@ -56,6 +61,7 @@ class Property(models.Model):
         
         return True
     
+    # Define computed fields
     @api.depends("living_area", 'garden_area')
     def _compute_area(self):
         for record in self:
@@ -68,7 +74,8 @@ class Property(models.Model):
                 record.best_price = max(record.property_offer_ids.mapped('price'))
             else:
                 record.best_price = 0.0
-                
+    
+    # Perform on change actions        
     @api.onchange("garden")
     def _onchange_garden(self):
         if self.garden:
@@ -77,7 +84,8 @@ class Property(models.Model):
         else:
             self.garden_area = 0
             self.garden_orientation = ''
-            
+    
+    # Add complicated constraints
     @api.constrains('selling_price')
     def _check_selling_price(self):
         for record in self:
