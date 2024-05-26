@@ -14,6 +14,10 @@ class PropertyOffer(models.Model):
     partner_id = fields.Many2one("res.partner", string="Partner", required=True)
     property_id = fields.Many2one("estate.property", string="Property", required=True)
     
+    _sql_constraints = [
+        ('check_offer_price', 'CHECK(price > 0)', 'The offer price must be a positive number.'),
+    ]
+    
     def action_set_accepted(self):
         for record in self:
             accepted_offers = self.search([
@@ -40,8 +44,14 @@ class PropertyOffer(models.Model):
     @api.depends("validity", 'create_date')
     def _compute_deadline(self):
         for record in self:
-            record.date_deadline = record.create_date + timedelta(days=record.validity)
+            if record.create_date:
+                record.date_deadline = record.create_date + timedelta(days=record.validity)
+            else:
+                record.date_deadline = fields.Date.today() + timedelta(days=record.validity)
             
     def _inverse_deadline(self):
         for record in self:
-            record.validity = (record.date_deadline - record.create_date.date()).days
+            if record.create_date:
+                record.validity = (record.date_deadline - record.create_date.date()).days
+            else:
+                record.validity = (record.date_deadline - fields.Date.today()).days
