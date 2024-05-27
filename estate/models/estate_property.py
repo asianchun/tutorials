@@ -22,6 +22,9 @@ class Property(models.Model):
     garden = fields.Boolean('Garden')
     garden_area = fields.Integer('Garden Area (sqm)')
     garden_orientation = fields.Selection(string='Garden Orientation', selection=[('north', 'North'), ('south', 'South'), ('east', 'East'), ('west', 'West')])
+    
+    # Reserved fields
+    # If active is false, automatically disable it from any search
     active = fields.Boolean(default=True)
     state = fields.Selection(selection=[('new', 'New'), ('offer received', 'Offer Received'), ('offer accepted', 'Offer Accepted'), ('sold', 'Sold'), ('cancelled', 'Cancelled')],
                              copy=False, default='new', required=True)
