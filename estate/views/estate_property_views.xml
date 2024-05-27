@@ -70,7 +70,7 @@
                         </page>
                         <page string="Offers">
                             <field name="property_offer_ids" readonly="state in ['sold', 'offer accepted', 'cancelled']">
-                                <tree string="Offers">
+                                <tree string="Offers" editable='bottom'>
                                     <field name="price"/>
                                     <field name="partner_id" />
                                     <field name="validity" />
