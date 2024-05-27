@@ -96,3 +96,10 @@ class Property(models.Model):
             if record.selling_price <= record.expected_price * 0.9:
                 raise ValidationError("The selling price cannot be less than 90% of the expected price! You must reduce the expected price if you want to accept the offer")
     
+    # Crud methods
+    @api.ondelete(at_uninstall=False)
+    def _unlink_if_not_new_or_cancelled(self):
+        for record in self:
+            if record.state != 'new' and record.state != 'cancelled':
+                raise UserError('Only new and cancelled properties can be deleted')
+    
