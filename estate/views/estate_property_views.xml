@@ -31,6 +31,7 @@
                             type="object" />
                     <button name="action_set_cancelled" string="Cancel"
                             type="object" />
+                    <field name="state" widget="statusbar" statusbar_visible="new, offer received, offer accepted, sold"/>
                 </header>
                 <sheet>
                     <div class="oe_title">
