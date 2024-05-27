@@ -104,7 +104,7 @@
                 <field name="living_area"/>
                 <field name="expected_price"/>
                 <field name="selling_price"/>
-                <field name="date_availability"/>
+                <field name="date_availability" optional='true'/>
             </tree>
         </field>
     </record>
