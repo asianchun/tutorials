@@ -70,14 +70,14 @@
                         </page>
                         <page string="Offers">
                             <field name="property_offer_ids" readonly="state in ['sold', 'offer accepted', 'cancelled']">
-                                <tree string="Offers" editable='bottom'>
+                                <tree string="Offers" editable='bottom' decoration-success="status == 'accepted'" decoration-danger="status == 'refused'">
                                     <field name="price"/>
                                     <field name="partner_id" />
                                     <field name="validity" />
                                     <field name="date_deadline" />
                                     <button name="action_set_accepted" type="object" icon="fa-check" invisible="status"/>
                                     <button name="action_set_rejected" type="object" icon="fa-times" invisible="status"/>
-                                    <field name="status"/>
+                                    <field name="status" invisible="1" column_invisible="True"/>
                                 </tree>
                             </field>
                         </page>
@@ -97,7 +97,8 @@
         <field name="name">estate.property.tree</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
-            <tree string="Properties">
+            <tree string="Properties"  decoration-success="state in ['offer accepted', 'offer received']" decoration-muted="state == 'sold'" decoration-bf="state == 'offer accepted'">
+                <field name="state" invisible="1" column_invisible="True"/>
                 <field name="name" string="Title"/> 
                 <field name="postcode"/>
                 <field name="bedrooms" string="Bedrooms"/>
