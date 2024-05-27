@@ -101,6 +101,7 @@
                 <field name="state" invisible="1" column_invisible="True"/>
                 <field name="name" string="Title"/> 
                 <field name="postcode"/>
+                <field name="property_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                 <field name="bedrooms" string="Bedrooms"/>
                 <field name="living_area"/>
                 <field name="expected_price"/>
